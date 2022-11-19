@@ -11,10 +11,13 @@
 
   /*Button icons*/
   --nav-icons-size: 32px;
+  --controls-icons-size: 48px;
 
   /*Colors*/
   --dark-grey: rgb(95, 94, 94);
   --light-grey: rgb(196, 192, 192);
+  --green: rgb(9, 172, 9);
+  --red: rgb(223, 29, 29);
 
   /*Nav*/
   --nav-height: 64px;
