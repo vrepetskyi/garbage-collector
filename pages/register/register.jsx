@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../../styles/Register.module.css";
+import styles from "../../styles/Form.module.css";
 import axios from "axios";
 
 export default function Register() {
@@ -39,8 +39,8 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.registerContent}>
-      <form className={styles.registerinForm} onSubmit={handleFormSubmit}>
+    <div className={styles.content}>
+      <form className={styles.form} onSubmit={handleFormSubmit}>
         <header>
           <h1 className={styles.header}>Register</h1>
         </header>
