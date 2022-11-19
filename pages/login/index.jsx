@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "../../styles/Form.module.css";
-import axios from "axios";
 
 export default function Login() {
   const [loginInputs, setLoginInputs] = useState({});
@@ -12,12 +11,13 @@ export default function Login() {
   };
 
   const handleFormSubmit = () => {
-    // todo url
-    axios
-      .post("", {
+    fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({
         email: loginInputs.email,
         password: loginInputs.password,
-      })
+      }),
+    })
       .then((response) => {
         console.log(response);
       })
