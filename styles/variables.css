@@ -1,0 +1,14 @@
+:root {
+  /*Spacings*/
+  --global-margin: 16px;
+
+  /*Button icons*/
+  --nav-icons-size: 32px;
+
+  /*Colors*/
+  --dark-grey: rgb(95, 94, 94);
+  --light-grey: rgb(196, 192, 192);
+
+  /*Nav*/
+  --nav-height: 64px;
+}
