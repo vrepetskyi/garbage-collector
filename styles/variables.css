@@ -1,0 +1,24 @@
+:root {
+  /*Spacings*/
+  --global-margin: 16px;
+
+  /*Font*/
+  --font-size-m: 20px;
+  --font-size-l: 32px;
+
+  /*Radius*/
+  --border-radius: 8px;
+
+  /*Button icons*/
+  --nav-icons-size: 32px;
+
+  /*Colors*/
+  --dark-grey: rgb(95, 94, 94);
+  --light-grey: rgb(196, 192, 192);
+
+  /*Nav*/
+  --nav-height: 64px;
+
+  /*Card*/
+  --card-height: 450px;
+}
