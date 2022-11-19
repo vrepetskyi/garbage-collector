@@ -18,8 +18,8 @@ export default async function handler(req, res) {
 
     const [{ id }] = await sql`
       INSERT
-        INTO users(email, password)
-        VALUES (${user.email}, ${user.password})
+        INTO users(name, surname, address, email, password)
+        VALUES (${user.name}, ${user.surname}, ${user.address}, ${user.email}, ${user.password})
         RETURNING id`;
 
     setTokenCookie(res, id);
