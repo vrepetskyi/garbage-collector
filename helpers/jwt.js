@@ -20,7 +20,11 @@ export function setTokenCookie(res, id) {
 }
 
 export function validateToken(req) {
-  const { token } = req.cookies;
-  const { id } = jwt.verify(token, process.env.JWT_SECRET);
-  return id;
+  try {
+    const { token } = req.cookies;
+    const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    return id;
+  } catch {
+    return false;
+  }
 }
