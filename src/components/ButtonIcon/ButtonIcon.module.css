@@ -1,6 +1,14 @@
-.button{
-    all: unset;
-    width: var(--nav-icons-size);
-    height: var(--nav-icons-size);
-    cursor: pointer;
+.button {
+  all: unset;
+  cursor: pointer;
+}
+
+.m {
+  width: var(--nav-icons-size);
+  height: var(--nav-icons-size);
+}
+
+.l{
+    width: var(--controls-icons-size);
+    height: var(--controls-icons-size);
 }

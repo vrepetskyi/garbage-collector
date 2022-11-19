@@ -6,3 +6,11 @@
 .grey{
     color: var(--dark-grey);
 }
+
+.green{
+    color: var(--green);
+}
+
+.red{
+    color: var(--red);
+}
