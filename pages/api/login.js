@@ -8,23 +8,22 @@ const loginUserSchema = object({
 });
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(400).send();
+  if (req.method !== "POST") return res.status(401).send();
 
+  let user;
   try {
-    const user = await loginUserSchema.validate(req.body, { strict: true });
-
-    const { rows } = await pool.query(
-      "SELECT id FROM users WHERE email=$1 AND password=$2;",
-      [user.email, user.password]
-    );
-
-    if (rows.length !== 1) throw new Error();
-
-    setTokenCookie(res, rows[0].id);
-
-    return res.send();
+    user = await loginUserSchema.validate(req.body, { strict: true });
   } catch (e) {
-    console.log(e);
-    return res.status(400).send();
+    return res.status(422).send(e.message);
   }
+
+  const { rows } = await pool.query(
+    "SELECT id FROM users WHERE email=$1 AND password=$2;",
+    [user.email, user.password]
+  );
+
+  if (rows.length !== 1) return res.status(401).send();
+
+  setTokenCookie(res, rows[0].id);
+  return res.send();
 }
