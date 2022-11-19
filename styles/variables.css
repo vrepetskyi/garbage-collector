@@ -2,6 +2,13 @@
   /*Spacings*/
   --global-margin: 16px;
 
+  /*Font*/
+  --font-size-m: 20px;
+  --font-size-l: 32px;
+
+  /*Radius*/
+  --border-radius: 8px;
+
   /*Button icons*/
   --nav-icons-size: 32px;
 
@@ -11,4 +18,7 @@
 
   /*Nav*/
   --nav-height: 64px;
+
+  /*Card*/
+  --card-height: 450px;
 }
