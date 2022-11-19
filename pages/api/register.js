@@ -1,7 +1,6 @@
 import { pool } from "helpers/pg";
 import { setTokenCookie } from "helpers/jwt";
 import { object, string } from "yup";
-import { v4 as uuidv4 } from "uuid";
 
 const newUserSchema = object({
   name: string().required(),
@@ -12,30 +11,29 @@ const newUserSchema = object({
 });
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(400).send();
+  if (req.method !== "POST") return res.status(405).send();
 
+  let user;
   try {
-    const user = await newUserSchema.validate(req.body);
-
-    const {
-      rows: [{ id }],
-    } = await pool.query(
-      "INSERT INTO users(id, name, surname, address, email, password) VALUES ($6, $1, $2, $3, $4, $5) RETURNING id",
-      [
-        user.name,
-        user.surname,
-        user.address,
-        user.email,
-        user.password,
-        uuidv4(),
-      ]
-    );
-
-    setTokenCookie(res, id);
-
-    return res.send();
+    user = await newUserSchema.validate(req.body);
   } catch (e) {
-    console.log(e);
-    return res.status(400).send();
+    return res.status(422).send(e);
   }
+
+  const { rows: emailMatches } = await pool.query(
+    "SELECT 1 FROM users WHERE email=$1;",
+    [user.email]
+  );
+
+  if (emailMatches.length > 0) return res.status(422).send();
+
+  const {
+    rows: [{ id }],
+  } = await pool.query(
+    "INSERT INTO users(name, surname, address, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING id;",
+    [user.name, user.surname, user.address, user.email, user.password]
+  );
+
+  setTokenCookie(res, id);
+  return res.send();
 }
