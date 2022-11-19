@@ -16,7 +16,7 @@ export default async (req, res) => {
   
   let userId = null;
    
-  if (!(userId = validateToken(req))) return res.status(400).send();
+  if (!(userId = validateToken(req, res))) return res.status(400).send();
 
   const form = new formidable.IncomingForm({hashAlgorithm: 'sha256'});
 

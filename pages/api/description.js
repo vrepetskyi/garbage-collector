@@ -5,7 +5,7 @@ import {v4 as uuid} from 'uuid';
 export default async (req, res) => {
     console.log('123')
     let userId = null;
-    if(!(userId = validateToken(req))) return res.status(403).send();
+    if(!(userId = validateToken(req, res))) return res.status(403).send();
 
     // TODO: validation
     console.log(req.body);
