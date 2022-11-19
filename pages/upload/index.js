@@ -24,6 +24,7 @@ export default function PrivatePage(props) {
 
   const uploadToServer = async (evt) => {
     evt.preventDefault();
+    console.log('upload to server');
     for (const img of images) {
       const body = new FormData();
       body.append("file", img);
@@ -33,9 +34,14 @@ export default function PrivatePage(props) {
       });
     }
 
+    console.log(desc);
+
     await fetch("/api/description", {
       method: "POST",
-      body: desc,
+      body: JSON.stringify(desc),
+      headers: {
+        'Content-Type': 'application/json'
+      },
     });
   };
 
