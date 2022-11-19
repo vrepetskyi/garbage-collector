@@ -1,0 +1,6 @@
+.button{
+    all: unset;
+    width: var(--nav-icons-size);
+    height: var(--nav-icons-size);
+    cursor: pointer;
+}

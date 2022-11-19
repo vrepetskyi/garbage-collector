@@ -1,0 +1,8 @@
+.icon{
+    width: 100%;
+    height: 100%;
+}
+
+.grey{
+    color: var(--dark-grey);
+}
