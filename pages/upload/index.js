@@ -93,11 +93,7 @@ export default function PrivatePage(props) {
           name="img2"
           onChange={(e) => uploadToClient(e, 2)}
         />
-        <button
-          className={styles.button}
-          type="submit"
-        //   onClick={uploadToServer}
-        >
+        <button className={styles.button} type="submit">
           Upload
         </button>
       </form>

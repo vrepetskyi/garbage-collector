@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "../../styles/Form.module.css";
-import axios from "axios";
 
 export default function Register() {
   const [registerInputs, setRegisterinInputs] = useState({});
@@ -13,23 +12,24 @@ export default function Register() {
   };
 
   const handleFormSubmit = (event) => {
+    event.preventDefault();
     if (password.value !== passwordConfirm.value) {
-      event.preventDefault();
       setShowErrorMsg(true);
       return;
     } else if (showErrorMsg) {
       setShowErrorMsg(false);
     }
 
-    // todo url, response
-    axios
-      .post("", {
+    fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify({
+        name: registerInputs.firstName,
+        surname: registerInputs.lastName,
+        address: registerInputs.address,
         email: registerInputs.email,
         password: registerInputs.password,
-        firstName: registerInputs.firstName,
-        lastName: registerInputs.lastName,
-        address: registerInputs.address,
-      })
+      }),
+    })
       .then((response) => {
         console.log(response);
       })
