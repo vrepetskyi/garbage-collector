@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(400).send();
 
   try {
-    const user = await newUserSchema.validate(req.body, { strict: true });
+    const user = await newUserSchema.validate(req.body);
 
     const {
       rows: [{ id }],
