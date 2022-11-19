@@ -10,11 +10,12 @@ export default async (req, res) => {
     // TODO: validation
     console.log(req.body);
     try {
-        await pool.query('INSERT INTO products (id, user_id, title) VALUES ($1, $2, $3);', [uuid(), userId, req.body.title]);
+        const unique = uuid();
+
+        await pool.query('INSERT INTO products (id, user_id, title) VALUES ($1, $2, $3);', [unique, userId, req.body.title]);
         
+        return res.json({uuid: unique});
     } catch (err) {
         console.log(err);
     }
-
-    console.log(req.cookies['token']);
 }

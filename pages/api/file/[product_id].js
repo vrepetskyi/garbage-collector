@@ -14,6 +14,7 @@ export const config = {
 export default async (req, res) => {
   if (req.method !== 'POST') return res.status(400).send();
   
+  console.log(req.url);
   let userId = null;
    
   if (!(userId = validateToken(req, res))) return res.status(400).send();
