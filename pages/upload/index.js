@@ -35,7 +35,7 @@ export default function PrivatePage(props) {
 
     await fetch("/api/description", {
       method: "POST",
-      body: setDesc,
+      body: desc,
     });
   };
 
