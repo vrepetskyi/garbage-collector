@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.logo {
+  max-width: 200px;
+  max-height: calc(var(--nav-height) - 25px);
+}
