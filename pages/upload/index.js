@@ -69,7 +69,7 @@ export default function PrivatePage(props) {
           value={desc.desc || ""}
           onChange={setDescription}
         />
-        <img src={createObjectURL[0]} />
+        <img className={styles.img} src={createObjectURL[0]} />
         <label htmlFor="img0">Image number 1.</label>{" "}
         <input
           id="img0"
@@ -77,7 +77,7 @@ export default function PrivatePage(props) {
           name="img0"
           onChange={(e) => uploadToClient(e, 0)}
         />
-        <img src={createObjectURL[1]} />
+        <img className={styles.img} src={createObjectURL[1]} />
         <label htmlFor="img1">Image number 2.</label>{" "}
         <input
           id="img1"
@@ -85,7 +85,7 @@ export default function PrivatePage(props) {
           name="img1"
           onChange={(e) => uploadToClient(e, 1)}
         />
-        <img src={createObjectURL[2]} />
+        <img className={styles.img} src={createObjectURL[2]} />
         <label htmlFor="img2">Image number 3.</label>{" "}
         <input
           id="img2"
