@@ -1,8 +1,9 @@
-import sql from "helpers/postgres";
+import { pool } from "helpers/pg";
 import { setTokenCookie } from "helpers/jwt";
 import { object, string } from "yup";
+import { v4 as uuidv4 } from "uuid";
 
-const userSchema = object({
+const newUserSchema = object({
   name: string().required(),
   surname: string().required(),
   address: string().required(),
@@ -14,13 +15,21 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(400).send();
 
   try {
-    const user = await userSchema.validate(req.body, { strict: true });
+    const user = await newUserSchema.validate(req.body);
 
-    const [{ id }] = await sql`
-      INSERT
-        INTO users(email, password)
-        VALUES (${user.email}, ${user.password})
-        RETURNING id`;
+    const {
+      rows: [{ id }],
+    } = await pool.query(
+      "INSERT INTO users(id, name, surname, address, email, password) VALUES ($6, $1, $2, $3, $4, $5) RETURNING id",
+      [
+        user.name,
+        user.surname,
+        user.address,
+        user.email,
+        user.password,
+        uuidv4(),
+      ]
+    );
 
     setTokenCookie(res, id);
 
