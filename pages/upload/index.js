@@ -25,24 +25,32 @@ export default function PrivatePage(props) {
   const uploadToServer = async (evt) => {
     evt.preventDefault();
     console.log('upload to server');
-    for (const img of images) {
-      const body = new FormData();
-      body.append("file", img);
-      const response = await fetch("/api/file", {
-        method: "POST",
-        body,
-      });
-    }
-
-    console.log(desc);
-
-    await fetch("/api/description", {
+    const res = await fetch("/api/description", {
       method: "POST",
       body: JSON.stringify(desc),
       headers: {
         'Content-Type': 'application/json'
       },
     });
+
+    const {uuid} = await res.json();
+
+    const imgagesFetch = [];
+    for (const img of images) {
+      const body = new FormData();
+      body.append("file", img);
+
+      imgagesFetch.push(await fetch("/api/file/" + uuid, {
+        method: "POST",
+        body,
+      }));
+    }
+
+    await Promise.allSettled(imgagesFetch);
+
+    console.log(desc);
+
+    
   };
 
   const setDescription = (evt) => {
