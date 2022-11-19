@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../../styles/Login.module.css";
+import styles from "../../styles/Form.module.css";
 import axios from "axios";
 
 export default function Login() {
@@ -27,8 +27,8 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.loginContent}>
-      <form className={styles.loginForm} onSubmit={handleFormSubmit}>
+    <div className={styles.content}>
+      <form className={styles.form} onSubmit={handleFormSubmit}>
         <header>
           <h1 className={styles.header}>Login</h1>
         </header>
