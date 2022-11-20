@@ -36,5 +36,5 @@ export default async function handle(req, res) {
     })
   );
 
-  return res.json(mappedProducts.filter((p) => !!p));
+  return res.json(mappedProducts.filter((p) => !!p).slice(0, 4));
 }
