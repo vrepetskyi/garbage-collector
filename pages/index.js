@@ -19,7 +19,7 @@ export async function getServerSideProps(context) {
   const path = "http://" + context.req.headers.host + "/api/products";
 
   const cookie = context.req.headers.cookie
-    .split("?")
+    .split("; ")
     .find((cookie) => cookie.includes("token"));
 
   console.log(cookie)

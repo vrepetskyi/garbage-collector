@@ -25,15 +25,17 @@ export default function Profile({ name, surname, email, address, products }) {
 }
 
 export async function getServerSideProps(context) {
-  const response = await fetch(
-    "http://" +
-      context.req.headers.host +
-      "/api/profile?" +
-      context.req.headers.cookie,
-    {
-      method: "GET",
-    }
-  );
+  const path = "http://" + context.req.headers.host + "/api/profile";
+
+  const cookie = context.req.headers.cookie
+    .split("; ")
+    .find((cookie) => cookie.includes("token"));
+
+  console.log(cookie);
+
+  const response = await fetch(cookie ? path + "?" + cookie : path, {
+    method: "GET",
+  });
 
   if (response.status !== 200)
     return {
