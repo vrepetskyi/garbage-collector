@@ -21,7 +21,7 @@ export default async function handle(req, res) {
         } else {
           userSeenProducts[userId].push(product.id);
         }
-      } else userSeenProducts[userId] = [];
+      } else userSeenProducts[userId] = [product.id];
 
       const { rows: images } = await pool.query(
         "SELECT path FROM images WHERE product_id=$1",
