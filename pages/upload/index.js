@@ -24,19 +24,33 @@ export default function PrivatePage(props) {
 
   const uploadToServer = async (evt) => {
     evt.preventDefault();
+    console.log('upload to server');
+    const res = await fetch("/api/description", {
+      method: "POST",
+      body: JSON.stringify(desc),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+
+    const {uuid} = await res.json();
+
+    const imgagesFetch = [];
     for (const img of images) {
       const body = new FormData();
       body.append("file", img);
-      const response = await fetch("/api/file", {
+
+      imgagesFetch.push(await fetch("/api/file/" + uuid, {
         method: "POST",
         body,
-      });
+      }));
     }
 
-    await fetch("/api/description", {
-      method: "POST",
-      body: setDesc,
-    });
+    await Promise.allSettled(imgagesFetch);
+
+    console.log(desc);
+
+    
   };
 
   const setDescription = (evt) => {
@@ -69,35 +83,34 @@ export default function PrivatePage(props) {
           value={desc.desc || ""}
           onChange={setDescription}
         />
-        <img src={createObjectURL[0]} />
+        <img className={styles.img} src={createObjectURL[0]} />
         <label htmlFor="img0">Image number 1.</label>{" "}
         <input
           id="img0"
           type="file"
           name="img0"
+          className={styles.input}
           onChange={(e) => uploadToClient(e, 0)}
         />
-        <img src={createObjectURL[1]} />
+        <img className={styles.img} src={createObjectURL[1]} />
         <label htmlFor="img1">Image number 2.</label>{" "}
         <input
           id="img1"
           type="file"
           name="img1"
+          className={styles.input}
           onChange={(e) => uploadToClient(e, 1)}
         />
-        <img src={createObjectURL[2]} />
+        <img className={styles.img} src={createObjectURL[2]} />
         <label htmlFor="img2">Image number 3.</label>{" "}
         <input
           id="img2"
           type="file"
           name="img2"
+          className={styles.input}
           onChange={(e) => uploadToClient(e, 2)}
         />
-        <button
-          className={styles.button}
-          type="submit"
-        //   onClick={uploadToServer}
-        >
+        <button className={styles.button} type="submit">
           Upload
         </button>
       </form>

@@ -1,32 +1,54 @@
 .content {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-  }
-  
-  .form {
-    display: grid;
-    width: 100%;
-    place-items: center;
-    gap: 1em;
-  }
-  
-  .header {
-    margin: 0;
-  }
-  
-  .input {
-    padding-inline: 1em;
-    border-radius: 10em;
-  }
-  
-  .errorMsg {
-    color: red;
-  }
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
 
-  .button {
-    border-radius: 10em;
-    padding-inline: 1em;
-    padding-block: 0.5em;
-  }
-  
+.form {
+  display: grid;
+  width: 100%;
+  place-items: center;
+  gap: 1em;
+  border-radius: var(--border-radius);
+  padding-inline: 1em;
+  padding-block: 1em;
+  box-shadow: 0.25em 0.25em 0.5em;
+  text-align: center;
+}
+
+:is(.input, .button):is(:focus-within, :focus-visible) {
+  border-color: transparent;
+  outline: solid var(--brand-dark);
+}
+
+.form > input[type="file"] {
+  max-width: 100%;
+}
+
+.header {
+  margin: 0;
+}
+
+.input:not([type="file"]) {
+  padding-inline: 1em;
+  border-radius: 10em;
+}
+
+.errorMsg {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.img {
+  max-width: 100%;
+}
+
+.button {
+  border-radius: 10em;
+  padding-inline: 1em;
+  padding-block: 0.5em;
+}
+
+.button:active {
+  background-color: var(--light-grey);
+}

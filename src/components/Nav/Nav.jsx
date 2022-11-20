@@ -5,7 +5,7 @@ export const Nav = function () {
   return (
     <div className={styles.container}>
       <ButtonIcon iconType="settings" color="grey" />
-      <img src="images/tinder-logo.png" alt="logo" className={styles.logo} />
+      <img src="images/Logotyp.svg" alt="logo" className={styles.logo} />
       <ButtonIcon iconType="message" color="grey" />
     </div>
   );

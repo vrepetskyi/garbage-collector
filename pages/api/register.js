@@ -1,8 +1,8 @@
-import sql from "helpers/postgres";
+import { pool } from "helpers/pg";
 import { setTokenCookie } from "helpers/jwt";
 import { object, string } from "yup";
 
-const userSchema = object({
+const newUserSchema = object({
   name: string().required(),
   surname: string().required(),
   address: string().required(),
@@ -11,22 +11,29 @@ const userSchema = object({
 });
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(400).send();
+  if (req.method !== "POST") return res.status(405).send();
 
+  let user;
   try {
-    const user = await userSchema.validate(req.body, { strict: true });
-
-    const [{ id }] = await sql`
-      INSERT
-        INTO users(name, surname, address, email, password)
-        VALUES (${user.name}, ${user.surname}, ${user.address}, ${user.email}, ${user.password})
-        RETURNING id`;
-
-    setTokenCookie(res, id);
-
-    return res.send();
+    user = await newUserSchema.validate(req.body);
   } catch (e) {
-    console.log(e);
-    return res.status(400).send();
+    return res.status(422).send(e);
   }
+
+  const { rows: emailMatches } = await pool.query(
+    "SELECT 1 FROM users WHERE email=$1;",
+    [user.email]
+  );
+
+  if (emailMatches.length > 0) return res.status(422).send();
+
+  const {
+    rows: [{ id }],
+  } = await pool.query(
+    "INSERT INTO users(name, surname, address, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING id;",
+    [user.name, user.surname, user.address, user.email, user.password]
+  );
+
+  setTokenCookie(res, id);
+  return res.send();
 }
