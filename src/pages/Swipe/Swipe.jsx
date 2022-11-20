@@ -10,7 +10,7 @@ export const Swipe = function () {
     {
       image: "images/lamp.jpeg",
       title: "Stara lampa",
-      description: "Fajna lampa, nie działa",
+      description: "Fajna lampa, nie działa text text text text text text text text text text",
     },
     {
       image: "images/lamp.jpeg",
