@@ -34,6 +34,6 @@ export default async function handle(req, res) {
       return { ...product, images: mappedImages };
     })
   );
-    console.log(mappedProducts)
+  
   return res.json({ products: mappedProducts.filter((p) => !!p).slice(0, 4) });
 }
