@@ -1,0 +1,24 @@
+.image {
+  height: 200px;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.imageItem {
+  text-align: center;
+}
+
+.link {
+  color: var(--brand-dark);
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  padding-block: 1em;
+  white-space: pre-line;
+}
+
+.list:not(:last-child) {
+  border-bottom: 2px solid var(--brand-light);
+}

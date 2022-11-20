@@ -1,31 +1,33 @@
-.card{
-    border-radius: var(--border-radius);
-    margin-top: 15px;
-    overflow: hidden;
-    border: 1px solid var(--light-grey);
-    box-shadow: 6px 6px 5px 0px var(--light-grey);
+.card {
+  border-radius: var(--border-radius);
+  margin-top: 15px;
+  overflow: hidden;
+  background-color: white;
+  border: 1px solid var(--light-grey);
+  box-shadow: 6px 6px 5px 0px var(--light-grey);
+  transition: all 0.35s ease-in;
 }
 
-.cardImage{
-    width: 100%;
-    height: var(--card-height);
-    object-fit: cover;
+.cardImage {
+  width: 100%;
+  height: var(--card-height);
+  object-fit: cover;
 }
 
-.textContent{
-    margin: 8px;
+.textContent {
+  margin: 8px;
 }
 
-.itemTitle{
-    margin-top: 10px;
-    padding: 5px 0;
-    margin: 0;
-    font-size: var(--font-size-l);
+.itemTitle {
+  margin-top: 10px;
+  padding: 5px 0;
+  margin: 0;
+  font-size: var(--font-size-l);
 }
 
-.itemDescription{
-    color: var(--dark-grey);
-    font-size: var(--font-size-m);
-    padding: 0;
-    margin: 0;
+.itemDescription {
+  color: var(--dark-grey);
+  font-size: var(--font-size-m);
+  padding: 0;
+  margin: 0;
 }
