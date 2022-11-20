@@ -2,12 +2,7 @@ import {pool} from 'helpers/pg';
 import {validateToken} from 'helpers/jwt';
 
 
-// [
-//     {
-//         userId: [id],
-//         products: [products_id]
-//     }
-// ]
+// order_id[]
 const cache = [];
 
 export default async (req, res) => {
@@ -21,8 +16,7 @@ export default async (req, res) => {
 
     for (const row of rows) row.path = '/pictures/' + row.path;
 
-    console.log(rows, 'database')
-    /**
+        /**
      * Reduce the row array
      * Find all products and their corresponding images like:
      * {
@@ -38,8 +32,6 @@ export default async (req, res) => {
     row: for (const row of rows) {
         for (const qu of query) {
             if (row.id === qu.id) {
-                // Push righ away since image path should repeate
-
                 qu.images.push(row.path);
 
                 continue row;
@@ -55,39 +47,20 @@ export default async (req, res) => {
         });
     }
 
-    res.json(query);
 
-    // // Array to return to the client
-    // let final = [];
+    const final = [];
+    let counter = 0;
 
-    // // Find if user was cached
-    // const index = cache.findIndex(i => i.userId === row.user_id);
+    main: for (const qu of query) {
+        for (const cacheItem of cache) {
+            if (cacheItem === qu.id) continue main;
+        }
 
-    // if (index === -1) {
-    //     final = rows.slice(0, 5);
+        final.push(qu);
+        cache.push(qu.id);
 
-    //     cache.push({
-    //         userId: row.user_id,
-    //         products: [...final.map(i => i.id)]
-    //     });
-        
-    //     console.log('fin len', final.length);
-        
-    //     return res.json(final);
-    // }
+        if (++counter > 5) break main;
+    }
 
-
-    // main: for (const row of rows) {
-    //     for (const product of cache[index].products) {
-    //         if (row.id === product) break main;
-    //     }
-
-    //     // This product was not cached
-
-    //     cache[index].products.push(row.id);
-    // }
-
-
-
-    // console.log(final);
+    res.json(final);
 }
