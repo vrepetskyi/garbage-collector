@@ -1,8 +1,7 @@
 import { pool } from "helpers/pg";
 import { validateToken } from "helpers/jwt";
 
-// order_id[]
-const cache = [];
+const userSeenProducts = {};
 
 export default async function handle(req, res) {
   let userId = null;
@@ -16,60 +15,24 @@ export default async function handle(req, res) {
 
   const mappedProducts = await Promise.all(
     otherProducts.map(async (product) => {
+      if (userId in userSeenProducts) {
+        if (userSeenProducts[userId].includes(product.id)) {
+          return false;
+        } else {
+          userSeenProducts[userId].push(product.id);
+        }
+      } else userSeenProducts[userId] = [];
+
       const { rows: images } = await pool.query(
         "SELECT path FROM images WHERE product_id=$1",
         [product.id]
       );
 
-      if (!images.length) return product;
-
       const mappedImages = images.map((image) => "/pictures/" + image.path);
+
       return { ...product, images: mappedImages };
     })
   );
 
-  /**
-   * Reduce the row array
-   * Find all products and their corresponding images like:
-   * {
-   *   id: [id],
-   *   title: [title],
-   *   description: [desciption],
-   *   images: [imagePath[]]
-   * }
-   */
-  const query = [];
-
-  row: for (const row of rows) {
-    for (const qu of query) {
-      if (row.id === qu.id) {
-        qu.images.push(row.path);
-
-        continue row;
-      }
-    }
-
-    query.push({
-      id: row.id,
-      title: row.title,
-      description: row.description,
-      images: [row.path],
-    });
-  }
-
-  const final = [];
-  let counter = 0;
-
-  main: for (const qu of query) {
-    for (const cacheItem of cache) {
-      if (cacheItem === qu.id) continue main;
-    }
-
-    final.push(qu);
-    cache.push(qu.id);
-
-    if (++counter > 5) break main;
-  }
-
-  res.json(final);
+  return res.json(mappedProducts.filter((p) => !!p));
 }
