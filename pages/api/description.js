@@ -12,7 +12,7 @@ export default async (req, res) => {
     try {
         const unique = uuid();
 
-        await pool.query('INSERT INTO products (id, user_id, title) VALUES ($1, $2, $3);', [unique, userId, req.body.title]);
+        await pool.query('INSERT INTO products (id, user_id, title, description) VALUES ($1, $2, $3, $4);', [unique, userId, req.body.title, req.body.desc]);
         
         return res.json({uuid: unique});
     } catch (err) {
