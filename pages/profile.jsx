@@ -1,5 +1,5 @@
-import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
+const cookie = require("cookie");
 
 export default function Profile({ name, surname, email, address, products }) {
   return (
@@ -27,13 +27,9 @@ export default function Profile({ name, surname, email, address, products }) {
 export async function getServerSideProps(context) {
   const path = "http://" + context.req.headers.host + "/api/profile";
 
-  const cookie = context.req.headers.cookie
-    .split("; ")
-    .find((cookie) => cookie.includes("token"));
+  const token = cookie.parse(context.req.headers.cookie).token;
 
-  console.log(cookie);
-
-  const response = await fetch(cookie ? path + "?" + cookie : path, {
+  const response = await fetch(token ? path + "?token=" + token : path, {
     method: "GET",
   });
 

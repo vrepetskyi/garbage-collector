@@ -1,5 +1,6 @@
 import { Container } from "src/components/Container/Container";
 import { Swipe } from "src/pages/Swipe/Swipe";
+const cookie = require("cookie");
 
 export default function Home({ products }) {
   const cardBuffer = products.map((product) => ({
@@ -18,13 +19,9 @@ export default function Home({ products }) {
 export async function getServerSideProps(context) {
   const path = "http://" + context.req.headers.host + "/api/products";
 
-  const cookie = context.req.headers.cookie
-    .split("; ")
-    .find((cookie) => cookie.includes("token"));
+  const token = cookie.parse(context.req.headers.cookie).token;
 
-  console.log(cookie)
-
-  const response = await fetch(cookie ? path + "?" + cookie : path, {
+  const response = await fetch(token ? path + "?token=" + token : path, {
     method: "GET",
   });
 
