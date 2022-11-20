@@ -10,7 +10,7 @@ export default function Home({ products }) {
 
   return (
     <Container>
-      {cardBuffer.length && <Swipe cardBuffer={cardBuffer} />}
+      <Swipe cardBuffer={cardBuffer} />
     </Container>
   );
 }
