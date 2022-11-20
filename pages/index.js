@@ -7,10 +7,10 @@ export default function Home({ products }) {
     description: product.description,
     image: product.images[0],
   }));
-  console.log(cardBuffer)
+
   return (
     <Container>
-      <Swipe cardBuffer={cardBuffer} />
+      {cardBuffer.length && <Swipe cardBuffer={cardBuffer} />}
     </Container>
   );
 }
