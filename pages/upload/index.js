@@ -89,6 +89,7 @@ export default function PrivatePage(props) {
           id="img0"
           type="file"
           name="img0"
+          className={styles.input}
           onChange={(e) => uploadToClient(e, 0)}
         />
         <img className={styles.img} src={createObjectURL[1]} />
@@ -97,6 +98,7 @@ export default function PrivatePage(props) {
           id="img1"
           type="file"
           name="img1"
+          className={styles.input}
           onChange={(e) => uploadToClient(e, 1)}
         />
         <img className={styles.img} src={createObjectURL[2]} />
@@ -105,6 +107,7 @@ export default function PrivatePage(props) {
           id="img2"
           type="file"
           name="img2"
+          className={styles.input}
           onChange={(e) => uploadToClient(e, 2)}
         />
         <button className={styles.button} type="submit">

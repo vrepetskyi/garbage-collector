@@ -62,21 +62,24 @@ export default function Register() {
           value={registerInputs.password || ""}
           onInput={handleInputChange}
         />
-        <input
-          type="password"
-          name="passwordConfirm"
-          id="passwordConfirm"
-          placeholder="confirm password"
-          className={styles.input}
-          value={registerInputs.passwordConfirm || ""}
-          onInput={handleInputChange}
-        />
-        <span
-          className={styles.errorMsg}
-          style={{ display: `${showErrorMsg ? "revert" : "none"}` }}
-        >
-          passwords don't match
-        </span>
+        <div>
+          <input
+            type="password"
+            name="passwordConfirm"
+            id="passwordConfirm"
+            placeholder="confirm password"
+            className={styles.input}
+            value={registerInputs.passwordConfirm || ""}
+            onInput={handleInputChange}
+          />
+          <span
+            className={styles.errorMsg}
+            style={{ display: `${showErrorMsg ? "revert" : "none"}` }}
+          >
+            passwords don't match
+          </span>
+        </div>
+
         <input
           type="text"
           name="firstName"
