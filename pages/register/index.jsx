@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 import styles from "../../styles/Form.module.css";
 
@@ -108,6 +109,7 @@ export default function Register() {
           Register
         </button>
       </form>
+      <p>Already have an account? <Link href="/login">Login!</Link></p>
     </div>
   );
 }

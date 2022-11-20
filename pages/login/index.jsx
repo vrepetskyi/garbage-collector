@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 import styles from "../../styles/Form.module.css";
 
@@ -54,6 +55,7 @@ export default function Login() {
           Login
         </button>
       </form>
+      <p>Do not have an account? <Link href="/register">Create one!</Link></p>
     </div>
   );
 }
