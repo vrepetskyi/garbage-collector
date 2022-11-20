@@ -28,31 +28,33 @@ export const Swipe = function () {
   const [indexCard, setIndexCard] = useState(0);
 
   useEffect(() => {
-    fetch("/api/products")
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(cardBuffer);
-        setCardBuffer((cardBuffer) =>
-          cardBuffer.concat(
-            res.map((el) => {
-              return {
-                image: el.images[0],
-                title: el.title,
-                description: el.description,
-              };
-            })
-          )
-        );
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    if (cardBuffer.length - indexCard <= 3)
+      fetch("/api/products")
+        .then((res) => res.json())
+        .then((res) => {
+          setCardBuffer((cardBuffer) =>
+            cardBuffer.concat(
+              res.map((el) => {
+                return {
+                  image: el.images[0],
+                  title: el.title,
+                  description: el.description,
+                };
+              })
+            )
+          );
+        })
+        .catch((err) => console.error(err));
+  }, [indexCard]);
 
   return (
     <>
       <Nav />
       {cardBuffer && cardBuffer.length > 0 ? (
         <div className={styles.content}>
-          <Buffer infoBuffer={cardBuffer} />
+          <div className={styles.bufferContainer}>
+            <Buffer infoBuffer={cardBuffer} counter={indexCard} />
+          </div>
           <Controls
             rightOnClick={() => {
               if (indexCard < cardBuffer.length) {
@@ -85,10 +87,9 @@ export const Swipe = function () {
   );
 };
 
-const Buffer = function ({ infoBuffer }) {
+const Buffer = function ({ infoBuffer, counter }) {
   return (
-    <div className={styles.bufferContainer}>
-      {console.log(infoBuffer)}
+    <>
       {infoBuffer &&
         infoBuffer.length > 0 &&
         infoBuffer?.map((el, index) => (
@@ -96,14 +97,11 @@ const Buffer = function ({ infoBuffer }) {
             image={el.image}
             title={el.title}
             description={el.description}
-            className={classNames(
-              styles.gridElement
-            )}
-            style={{zIndex: -index}}
-            id={index === 0 ? "firstCard" : undefined}
+            className={styles.gridElement}
+            style={{ zIndex: -index }}
             key={index}
           />
         ))}
-    </div>
+    </>
   );
 };
