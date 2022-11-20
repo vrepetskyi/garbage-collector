@@ -1,6 +1,9 @@
 html,
 body {
   padding: 0;
+  height: 100vh;
+  overflow-y: hidden;
+  margin: var(--global-margin);
   margin-inline: var(--global-margin);
   margin-block: 0;
   font-family: var(--font-stack);
