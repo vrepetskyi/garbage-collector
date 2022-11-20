@@ -1,5 +1,5 @@
 # HackYeah project
-Make in 24 hours with the most skilled developers out there
+Makde in exacly 24 hours with the most skilled developers out there
 ## Getting Started
 
 First, run the development server:
