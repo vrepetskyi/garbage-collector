@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "../../styles/Form.module.css";
 
 export default function Register() {
   const [registerInputs, setRegisterinInputs] = useState({});
   const [showErrorMsg, setShowErrorMsg] = useState(false);
+  const router = useRouter();
 
   const handleInputChange = (event) => {
     const name = event.target.name;
@@ -33,6 +35,7 @@ export default function Register() {
     })
       .then((response) => {
         console.log(response);
+        router.push("/profile");
       })
       .catch((error) => {
         console.log(error);
@@ -112,7 +115,9 @@ export default function Register() {
           Register
         </button>
       </form>
-      <p>Already have an account? <Link href="/login">Login!</Link></p>
+      <p>
+        Already have an account? <Link href="/login">Login!</Link>
+      </p>
     </div>
   );
 }

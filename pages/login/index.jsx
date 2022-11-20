@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "../../styles/Form.module.css";
 
 export default function Login() {
   const [loginInputs, setLoginInputs] = useState({});
+  const router = useRouter();
 
   const handleInputChange = (event) => {
     const name = event.target.name;
@@ -21,6 +23,7 @@ export default function Login() {
     })
       .then((response) => {
         console.log(response);
+        router.push("/profile");
       })
       .catch((error) => {
         console.log(error);
