@@ -27,7 +27,7 @@ export default function Profile({ name, surname, email, address, products }) {
 export async function getServerSideProps(context) {
   const path = "http://" + context.req.headers.host + "/api/profile";
 
-  const token = cookie.parse(context.req.headers.cookie).token;
+  const token = (cookie.parse(context.req.headers.cookie || "")).token;
 
   const response = await fetch(token ? path + "?token=" + token : path, {
     method: "GET",

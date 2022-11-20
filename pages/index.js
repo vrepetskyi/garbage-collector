@@ -19,7 +19,7 @@ export default function Home({ products }) {
 export async function getServerSideProps(context) {
   const path = "http://" + context.req.headers.host + "/api/products";
 
-  const token = cookie.parse(context.req.headers.cookie).token;
+  const token = (cookie.parse(context.req.headers.cookie || "")).token;
 
   const response = await fetch(token ? path + "?token=" + token : path, {
     method: "GET",
