@@ -8,6 +8,8 @@ export default async function handle(req, res) {
 
   if (!(userId = validateToken(req, res))) return res.status(401).send();
 
+  if ("reset" in req.query) userSeenProducts[userId] = [];
+
   const { rows: otherProducts } = await pool.query(
     "SELECT id, title, description FROM products WHERE user_id != $1;",
     [userId]
