@@ -27,9 +27,9 @@
 }
 
 .swipeRight{
-    transform: translateX(600px) rotate(25deg);
+    transform: translateX(1200px) rotate(25deg);
 }
 
 .swipeLeft{
-    transform: translateX(-600px) rotate(-25deg);
+    transform: translateX(-1200px) rotate(-25deg);
 }

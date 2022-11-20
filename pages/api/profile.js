@@ -7,5 +7,22 @@ export default async function handler(req, res) {
   let id;
   if (!(id = validateToken(req, res))) return res.status(401).send();
 
-  pool.query("SELECT * FROM users");
+  const {
+    rows: [user],
+  } = await pool.query("SELECT * FROM users WHERE id=$1", [id]);
+
+  const { rows: products } = await pool.query(
+    "SELECT * FROM products WHERE user_id=$1",
+    [id]
+  );
+
+  user.products = products.map(async (product) => {
+    const { rows: images } = await pool.query(
+      "SELECT * FROM images WHERE product_id=$1",
+      [product.id]
+    );
+    return { ...product, images };
+  });
+
+  res.json(user);
 }
