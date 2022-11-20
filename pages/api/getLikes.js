@@ -1,9 +1,5 @@
-import {pool} from 'helpers/pg';
 import {validateToken} from 'helpers/jwt';
-
-
-// order_id[]
-const cache = [];
+import {pool} from 'helpers/pg';
 
 export default async (req, res) => {
     let userId = null;
@@ -11,13 +7,11 @@ export default async (req, res) => {
     if (!(userId = validateToken(req, res))) return res.status(400).send();
 
 
-
-    const {rows} = await pool.query('SELECT products.id, title, description, path FROM products LEFT JOIN images ON products.id = product_id WHERE user_id != $1;', [userId]);
+    const {rows} = await pool.query('SELECT likes.product_id, title, description, path FROM likes LEFT JOIN images ON likes.product_id = images.product_id LEFT JOIN products ON products.id = likes.product_id  WHERE user_id = $1', [userId]);
 
     for (const row of rows) row.path = '/pictures/' + row.path;
 
-
-    /**
+        /**
      * Reduce the row array
      * Find all products and their corresponding images like:
      * {
@@ -46,22 +40,9 @@ export default async (req, res) => {
             description: row.description,
             images: [row.path]
         });
+
     }
 
 
-    const final = [];
-    let counter = 0;
-
-    main: for (const qu of query) {
-        for (const cacheItem of cache) {
-            if (cacheItem === qu.id) continue main;
-        }
-
-        final.push(qu);
-        cache.push(qu.id);
-
-        if (++counter > 5) break main;
-    }
-
-    res.json(final);
+    res.json(query);
 }

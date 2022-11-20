@@ -22,7 +22,7 @@ export function setTokenCookie(res, id) {
 export function validateToken(req, res) {
   try {
     const { token } = req.cookies;
-    const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    const { id } = jwt.verify(token || req.query.token, process.env.JWT_SECRET);
     setTokenCookie(res, id);
     return id;
   } catch {

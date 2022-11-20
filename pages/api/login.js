@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   let user;
   try {
-    user = await loginUserSchema.validate(req.body, { strict: true });
+    user = await loginUserSchema.validate(req.body);
   } catch (e) {
     return res.status(422).send(e.message);
   }

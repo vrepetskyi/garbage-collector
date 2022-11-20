@@ -13,21 +13,16 @@ export default function Login() {
     setLoginInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleFormSubmit = () => {
-    fetch("/api/login", {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("/api/login", {
       method: "POST",
       body: JSON.stringify({
         email: loginInputs.email,
         password: loginInputs.password,
       }),
-    })
-      .then((response) => {
-        console.log(response);
-        router.push("/profile");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    });
+    if (response.status === 200) router.push("/profile");
   };
 
   return (
@@ -58,7 +53,9 @@ export default function Login() {
           Login
         </button>
       </form>
-      <p>Do not have an account? <Link href="/register">Create one!</Link></p>
+      <p>
+        Do not have an account? <Link href="/register">Create one!</Link>
+      </p>
     </div>
   );
 }
