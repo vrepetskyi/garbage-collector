@@ -1,14 +1,30 @@
-import { Card } from "../src/components/Card/Card";
-import styles from "../styles/Home.module.css";
-import { Nav } from "./../src/components/Nav/Nav";
-import { Controls } from "../src/components/Controls/Controls";
 import { Container } from "src/components/Container/Container";
 import { Swipe } from "src/pages/Swipe/Swipe";
 
-export default function Home() {
+export default function Home({ products }) {
+  const cardBuffer = products.map((product) => ({
+    title: product.title,
+    description: product.description,
+    image: product.images[0],
+  }));
+  console.log(cardBuffer)
   return (
     <Container>
-      <Swipe />
+      <Swipe cardBuffer={cardBuffer} />
     </Container>
   );
+}
+
+export async function getServerSideProps(context) {
+  const path = "http://" + context.req.headers.host + "/api/products";
+
+  const cookie = context.req.headers.cookie;
+
+  const response = await fetch(cookie ? path + "?" + cookie : path, {
+    method: "GET",
+  });
+
+  return {
+    props: await response.json(),
+  };
 }

@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
     }
   );
 
-  if (response.status === 401)
+  if (response.status !== 200)
     return {
       redirect: {
         destination: "/login",

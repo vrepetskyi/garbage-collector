@@ -4,20 +4,19 @@ import { validateToken } from "helpers/jwt";
 const userSeenProducts = {};
 
 export default async function handle(req, res) {
-  let userId = null;
-
-  if (!(userId = validateToken(req, res))) return res.status(401).send();
+  let userId = validateToken(req, res) || null;
 
   if ("reset" in req.query) userSeenProducts[userId] = [];
 
   const { rows: otherProducts } = await pool.query(
-    "SELECT id, title, description FROM products WHERE user_id != $1;",
-    [userId]
+    "SELECT id, title, description FROM products" +
+      (userId ? " WHERE user_id != $1;" : ";"),
+    userId && [userId]
   );
 
   const mappedProducts = await Promise.all(
     otherProducts.map(async (product) => {
-      if (userId in userSeenProducts) {
+      if (userId && userId in userSeenProducts) {
         if (userSeenProducts[userId].includes(product.id)) {
           return false;
         } else {
@@ -35,6 +34,6 @@ export default async function handle(req, res) {
       return { ...product, images: mappedImages };
     })
   );
-
-  return res.json(mappedProducts.filter((p) => !!p).slice(0, 4));
+    console.log(mappedProducts)
+  return res.json({ products: mappedProducts.filter((p) => !!p).slice(0, 4) });
 }

@@ -5,27 +5,9 @@ import { Controls } from "src/components/Controls/Controls";
 import styles from "./Swipe.module.css";
 import classNames from "classnames";
 
-export const Swipe = function () {
-  const [cardBuffer, setCardBuffer] = useState([
-    {
-      image: "images/lamp.jpeg",
-      title: "Stara lampa",
-      description: "Fajna lampa, nie działa text text text text text text text text text text",
-    },
-    {
-      image: "images/lamp.jpeg",
-      title: "Fajna lampa",
-      description: "Fajna lampa, nie działa",
-    },
-    {
-      image: "images/lamp.jpeg",
-      title: "YYYYYYYYYYY lampa",
-      description: "Fajna lampa, nie działa",
-    },
-  ]);
-
+export const Swipe = function ({ cardBuffer }) {
   const [indexCard, setIndexCard] = useState(0);
-
+  
   return (
     <>
       <Nav />
@@ -33,15 +15,18 @@ export const Swipe = function () {
         <Buffer infoBuffer={cardBuffer} />
         <Controls
           rightOnClick={() => {
-            const first = document.querySelectorAll("." + styles.gridElement)[indexCard];
+            const first = document.querySelectorAll("." + styles.gridElement)[
+              indexCard
+            ];
             first.classList.add(styles.swipeRight);
 
             setIndexCard(indexCard + 1);
             setTimeout(() => first.classList.add(styles.none), 2000);
           }}
-
           leftOnClick={() => {
-            const first = document.querySelectorAll("." + styles.gridElement)[indexCard];
+            const first = document.querySelectorAll("." + styles.gridElement)[
+              indexCard
+            ];
             first.classList.add(styles.swipeLeft);
 
             setIndexCard(indexCard + 1);
