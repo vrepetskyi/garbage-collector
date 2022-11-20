@@ -2,8 +2,7 @@ import {pool} from 'helpers/pg';
 import {validateToken} from 'helpers/jwt';
 
 
-// order_id[]
-const cache = [];
+const userSeenProducts = {};
 
 export default async (req, res) => {
     let userId = null;
