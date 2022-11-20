@@ -12,11 +12,12 @@ export default async (req, res) => {
 
 
 
-    const {rows} = await pool.query('SELECT products.id, title, description, path FROM products LEFT JOIN images ON products.id = product_id WHERE user_id = $1;', [userId]);
+    const {rows} = await pool.query('SELECT products.id, title, description, path FROM products LEFT JOIN images ON products.id = product_id WHERE user_id != $1;', [userId]);
 
     for (const row of rows) row.path = '/pictures/' + row.path;
 
-        /**
+
+    /**
      * Reduce the row array
      * Find all products and their corresponding images like:
      * {
