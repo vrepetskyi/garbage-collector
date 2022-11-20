@@ -19,6 +19,7 @@ export async function getServerSideProps(context) {
   const path = "http://" + context.req.headers.host + "/api/products";
 
   const cookie = context.req.headers.cookie;
+  console.log(cookie)
 
   const response = await fetch(cookie ? path + "?" + cookie : path, {
     method: "GET",
