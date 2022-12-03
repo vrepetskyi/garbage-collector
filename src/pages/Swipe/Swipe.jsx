@@ -7,7 +7,7 @@ import classNames from "classnames";
 
 export const Swipe = function ({ cardBuffer }) {
   const [indexCard, setIndexCard] = useState(0);
-  
+
   return (
     <>
       <Nav />
@@ -55,6 +55,9 @@ const Buffer = function ({ infoBuffer }) {
             key={index}
           />
         ))}
+      {infoBuffer.length < 10 && (
+        <p className={styles.outOfProducts}>You have seen all the products!</p>
+      )}
     </div>
   );
 };

@@ -4,9 +4,9 @@
   grid-template-rows: 85% 15%;
 }
 
-.bufferContainer{
-    display: grid;
-    overflow: visible;
+.outOfProducts {
+    position: relative;
+    top: -200px;
 }
 
 .gridElement{
